@@ -9,7 +9,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    ENetAddress address;
+    ENetAddress address; 
     address.host = ENET_HOST_ANY;
     address.port = 1234;
 
