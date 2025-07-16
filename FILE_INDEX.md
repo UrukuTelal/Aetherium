@@ -46,4 +46,11 @@ https://github.com/UrukuTelal/Aetherium/blob/main/worldsync/placeholder.txt
 https://github.com/UrukuTelal/Aetherium/blob/main/CMakeLists.txt
 https://github.com/UrukuTelal/Aetherium/blob/main/README.md
 https://github.com/UrukuTelal/Aetherium/blob/main/main.cpp
-
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/android/android_platform.cpp
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/android/android_platform.h
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/linux/linux_platform.cpp
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/linux/linux_platform.h
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/windows/windows_platform.cpp
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/windows/windows_platform.h
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/platform.cpp
+https://github.com/UrukuTelal/Aetherium/blob/main/client/platform/platform.h
