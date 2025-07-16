@@ -4,7 +4,7 @@ file(GLOB CLIENT_SRC CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/platform/*.cpp"
 )
 
-add_executable(client ${CLIENT_SRC})
+add_executable(client ${CLIENT_SRC} "android/jni/bridge.cpp" "platform/android/android_platform.cpp" "platform/android/android_platform.h"  "platform/windows/windows_platform.cpp" "platform/windows/windows_platform.h" "platform/linux/linux_platform.cpp" "platform/linux/linux_platform.h" "platform/platform.cpp" "platform/platform.h")
 
 target_include_directories(client PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
