@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Galaxy Viewer</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: black; }
+    canvas { display: block; }
+    #ui {
+      position: absolute; top: 10px; left: 10px; color: white; font-family: sans-serif;
+      background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 8px;
+    }
+    #ui input { width: 60px; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    Stars: <input id="starCount" type="number" value="5000"><br>
+    Arms: <input id="armCount" type="number" value="4"><br>
+    Radius: <input id="radius" type="number" value="800"><br>
+    <button onclick="generateAndRender()">Generate</button>
+    <button onclick="exportJSON()">Export</button>
+  </div>
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.module.js';
+    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.157.0/examples/jsm/controls/OrbitControls.js';
+    import generateGalaxy from './galaxyGenerator.js';
+
+    let scene, camera, renderer, starsMesh;
+    let starsData = [];
+
+    init();
+    generateAndRender();
+
+    function init() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+      camera.position.z = 1500;
+
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      new OrbitControls(camera, renderer.domElement);
+
+      animate();
+    }
+
+    function generateAndRender() {
+      if (starsMesh) scene.remove(starsMesh);
+
+      const starCount = +document.getElementById('starCount').value;
+      const armCount = +document.getElementById('armCount').value;
+      const radius = +document.getElementById('radius').value;
+
+      starsData = generateGalaxy({ starCount, armCount, radius });
+
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(starsData.length * 3);
+
+      starsData.forEach((s, i) => {
+        positions[i * 3] = s.x;
+        positions[i * 3 + 1] = s.y;
+        positions[i * 3 + 2] = s.z;
+      });
+
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const material = new THREE.PointsMaterial({ color: 0xffffff, size: 2 });
+      starsMesh = new THREE.Points(geometry, material);
+      scene.add(starsMesh);
+    }
+
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify(starsData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'star_positions.json';
+      a.click();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+  </script>
+</body>
+</html>
